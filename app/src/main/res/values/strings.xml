@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">吉方云助</string>
+    <string name="ch_edt_login_accout">邮箱</string>
+    <string name="ch_edt_login_account">密码</string>
+    <string name="ch_btn_login_forgot">忘记密码</string>
+    <string name="ch_btn_login_register">用户注册</string>
+</resources>
