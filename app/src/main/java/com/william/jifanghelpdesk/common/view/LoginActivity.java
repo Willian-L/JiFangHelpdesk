@@ -8,14 +8,14 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
 import com.william.jifanghelpdesk.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    ImageButton btnLogin;
+    Button btnLogin;
     EditText edtAccount, edtPassword;
 
     @Override
@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void init() {
-        btnLogin = findViewById(R.id.imgBtn_login_ensure);
+        btnLogin = findViewById(R.id.btn_login_ensure);
         edtAccount = findViewById(R.id.edt_login_account);
         edtPassword = findViewById(R.id.edt_login_password);
     }
