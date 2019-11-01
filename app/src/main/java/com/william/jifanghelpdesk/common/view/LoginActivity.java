@@ -35,10 +35,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(edtPassword.getText().toString()) && count > 0) {
                     btnLogin.setEnabled(true);
-                    btnLogin.setBackgroundResource(R.drawable.btn_login_ensure);
+                    btnLogin.setBackgroundResource(R.drawable.btn_login_true);
                 } else {
                     btnLogin.setEnabled(false);
-                    btnLogin.setBackgroundResource(R.drawable.login_ensure_false);
+                    btnLogin.setBackgroundResource(R.drawable.btn_login_false);
                 }
             }
 
@@ -58,10 +58,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(edtAccount.getText().toString()) && count > 0) {
                     btnLogin.setEnabled(true);
-                    btnLogin.setBackgroundResource(R.drawable.btn_login_ensure);
+                    btnLogin.setBackgroundResource(R.drawable.btn_login_true);
                 } else {
                     btnLogin.setEnabled(false);
-                    btnLogin.setBackgroundResource(R.drawable.login_ensure_false);
+                    btnLogin.setBackgroundResource(R.drawable.btn_login_false);
                 }
             }
 

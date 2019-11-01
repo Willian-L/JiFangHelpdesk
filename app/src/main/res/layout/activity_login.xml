@@ -18,35 +18,35 @@
 
     <EditText
         android:id="@+id/edt_login_account"
-        android:inputType="textEmailAddress"
-        android:hint="@string/ch_edt_login_accout"
+        style="@style/edt_login"
+        android:layout_width="match_parent"
         android:layout_marginTop="40dp"
-        style="@style/edt_login" />
+        android:hint="@string/ch_edt_login_accout" />
 
     <EditText
         android:id="@+id/edt_login_password"
+        style="@style/edt_login"
         android:layout_marginTop="15dp"
-        android:inputType="textPassword"
-        android:maxLength="16"
         android:hint="@string/ch_edt_login_account"
-        style="@style/edt_login" />
+        android:inputType="textPassword"
+        android:maxLength="16" />
 
     <Button
         android:id="@+id/btn_login_ensure"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_login_false"
+        android:enabled="false"
         android:text="登  陆"
         android:textColor="#eeffffff"
-        android:background="@drawable/btn_login"
-        android:textSize="20dp"
-        android:layout_marginTop="45dp"
-        android:enabled="false" />
+        android:textSize="20dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:gravity="bottom">
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,20 +55,20 @@
 
             <Button
                 android:id="@+id/btn_login_forgot"
-                android:text="@string/ch_btn_login_forgot"
-                style="@style/btn_login_bottom" />
+                style="@style/btn_login_bottom"
+                android:text="@string/ch_btn_login_forgot" />
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="#cccccc"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginRight="15dp"
+                android:background="#cccccc" />
 
             <Button
                 android:id="@+id/btn_login_register"
-                android:text="@string/ch_btn_login_register"
-                style="@style/btn_login_bottom"/>
+                style="@style/btn_login_bottom"
+                android:text="@string/ch_btn_login_register" />
 
         </LinearLayout>
 
