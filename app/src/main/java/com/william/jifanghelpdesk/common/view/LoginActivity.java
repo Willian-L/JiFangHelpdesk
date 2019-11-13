@@ -12,6 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.william.jifanghelpdesk.R;
+import com.william.jifanghelpdesk.Utils.ApiUrl;
+import com.william.jifanghelpdesk.Utils.RetrofitUtils;
+import com.william.jifanghelpdesk.bean.ResponseLogin;
+
+import retrofit2.Call;
+import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -74,16 +80,22 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, HomepageActivity.class);
-                startActivity(intent);
-                finish();
+                Login();
             }
         });
     }
+
+    private void Login(){
+        String username = edtAccount.getText().toString().trim();
+        String password = edtPassword.getText().toString().trim();
+        ApiUrl api = RetrofitUtils.getApiUrl();
+        Call<ResponseLogin> loginCall = api.postUser(username,password);
+}
 
     private void init() {
         btnLogin = findViewById(R.id.btn_login_ensure);
         edtAccount = findViewById(R.id.edt_login_account);
         edtPassword = findViewById(R.id.edt_login_password);
     }
+
 }
