@@ -17,6 +17,8 @@ import com.william.jifanghelpdesk.Utils.RetrofitUtils;
 import com.william.jifanghelpdesk.bean.ResponseLogin;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
@@ -90,6 +92,17 @@ public class LoginActivity extends AppCompatActivity {
         String password = edtPassword.getText().toString().trim();
         ApiUrl api = RetrofitUtils.getApiUrl();
         Call<ResponseLogin> loginCall = api.postUser(username,password);
+        loginCall.enqueue(new Callback<ResponseLogin>() {
+            @Override
+            public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseLogin> call, Throwable t) {
+
+            }
+        });
 }
 
     private void init() {
