@@ -1,6 +1,6 @@
 package com.william.jifanghelpdesk.Utils;
 
-public class Constans {
+class Constans {
 
     // 设置默认超时时间
     public static final int DEFAULT_TIME = 10;
@@ -9,5 +9,4 @@ public class Constans {
 
     public static final String Base_Url = "www.jcube.com.cn";
     public static final String Login_Uri = "/v1/iam/session";
-
 }

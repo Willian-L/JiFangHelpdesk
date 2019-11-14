@@ -1,6 +1,9 @@
 package com.william.jifanghelpdesk.Utils;
 
+
 import android.util.Log;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
@@ -10,9 +13,13 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-class LoggingInterceptor implements Interceptor {
+/**
+ * Log拦截器
+ */
+public class LoggingInterceptor implements Interceptor {
+    @NotNull
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public Response intercept(@NotNull Chain chain) throws IOException {
         //这个chain里面包含了request和response，所以你要什么都可以从这里拿
         Request request = chain.request();
         long t1 = System.nanoTime();//请求发起的时间

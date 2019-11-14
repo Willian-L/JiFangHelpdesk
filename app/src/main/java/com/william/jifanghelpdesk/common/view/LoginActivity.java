@@ -2,7 +2,6 @@ package com.william.jifanghelpdesk.common.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -12,14 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.william.jifanghelpdesk.R;
-import com.william.jifanghelpdesk.Utils.ApiUrl;
-import com.william.jifanghelpdesk.Utils.RetrofitUtils;
-import com.william.jifanghelpdesk.bean.ResponseLogin;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -87,23 +78,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void Login(){
-        String username = edtAccount.getText().toString().trim();
-        String password = edtPassword.getText().toString().trim();
-        ApiUrl api = RetrofitUtils.getApiUrl();
-        Call<ResponseLogin> loginCall = api.postUser(username,password);
-        loginCall.enqueue(new Callback<ResponseLogin>() {
-            @Override
-            public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseLogin> call, Throwable t) {
-
-            }
-        });
-}
+    private void Login() {
+    }
 
     private void init() {
         btnLogin = findViewById(R.id.btn_login_ensure);
