@@ -41,8 +41,8 @@ public class OkHttpUtils {
                 .writeTimeout(Constans.DEFAULT_TIME, TimeUnit.SECONDS);// 设置写入超时时间
 
         if (BuildConfig.DEBUG) {
-            builder.addInterceptor(new LoggingInterceptor())// 使用Log拦截器
-                    .retryOnConnectionFailure(true);// 出现错误时重新连接
+            builder.retryOnConnectionFailure(true)// 出现错误时重新连接
+            .addInterceptor(new LoggingInterceptor());// 使用Log拦截器
         }
 
         OkHttpClient client = builder.build();

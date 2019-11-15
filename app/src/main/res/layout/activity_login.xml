@@ -36,8 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
-        android:background="@drawable/btn_login_false"
-        android:enabled="false"
+        android:background="@drawable/btn_login_true"
+        android:enabled="true"
         android:text="登  陆"
         android:textColor="#eeffffff"
         android:textSize="20dp" />
