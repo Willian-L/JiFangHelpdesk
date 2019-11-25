@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.william.jifanghelpdesk"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 3
-        versionName "0.2.1"
+        targetSdkVersion 29
+        versionCode 5
+        versionName "0.2.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -30,6 +30,11 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.2.1'
     //添加Json解析返回数据
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    implementation 'com.alibaba:fastjson:1.2.61'
+    implementation 'com.alibaba:fastjson:1.1.71.android'
+
+    implementation 'cn.yipianfengye.android:zxing-library:2.2'
 
 //    //retrofit网络请求框架
 //    implementation 'com.squareup.retrofit2:retrofit:2.5.0'

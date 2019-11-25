@@ -1,6 +1,6 @@
 package com.william.jifanghelpdesk.bean;
 
-public class UserBean {
+public class Bean {
     public String getCode() {
         return code;
     }

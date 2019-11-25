@@ -1,33 +1,53 @@
 package com.william.jifanghelpdesk.Utils;
 
-import java.io.IOException;
+import android.util.Log;
+
+import com.alibaba.fastjson.JSON;
+import com.william.jifanghelpdesk.bean.User;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.FormBody;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class LoginPost {
-    public static Response loginPost(String username, String password) {
-        FormBody.Builder body = new FormBody.Builder();
+    FormBody.Builder body = new FormBody.Builder();
+
+    private boolean result = false;
+
+    public boolean loginPost(String username, String password) {
         body.add("username", username);
         body.add("password", password);
-
-        Request request = new Request.Builder()
-                .url(Constans.Base_Url + Constans.Login_Uri)
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "*/*")
-                .post(body.build())
-                .build();
-        Response response = null;
-        OkHttpUtils okHttpUtils = OkHttpUtils.getOkHttpUtils();
         try {
-            response = okHttpUtils.initOkHttp().newCall(request).execute();
-
-            System.out.println("123456 + " + response.body().string());
-        } catch (IOException e) {
+            OkHttpUtils okHttpUtils = OkHttpUtils.getOkHttpUtils();
+            Request request = new Request.Builder()
+                    .url(Constans.Base_Url + Constans.Login_Uri)
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Accept", "*/*")
+                    .post(body.build())
+                    .build();
+            Response response = okHttpUtils.initOkHttp().newCall(request).execute();
+            String responseData = response.body().string();
+            int code = response.code();
+            if (code == 200) {
+                result = true;
+                User person = JSON.parseObject(responseData, User.class);
+                person.setUser_name(username);
+                person.setPassword(password);
+                Map<String, String> map = new HashMap<String, String>();
+                map.put(person.getUSER_NAME(), person.getUser_name());
+                map.put(person.getPASSWORD(), person.getPassword());
+                map.put(person.getACCESS_TOKEN(), person.getAccess_token());
+                SharedPreferencesUtils.getInstance().putMap(person.getUser_name(), map);
+                return result;
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return response;
+        System.out.println(result);
+        return result;
     }
 }
+
