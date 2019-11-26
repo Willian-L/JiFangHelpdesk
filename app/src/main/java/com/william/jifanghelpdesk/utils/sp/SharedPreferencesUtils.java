@@ -1,4 +1,4 @@
-package com.william.jifanghelpdesk.Utils;
+package com.william.jifanghelpdesk.utils.sp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,10 +14,6 @@ public class SharedPreferencesUtils {
     private SharedPreferences share;
     private SharedPreferences.Editor editor;
     private String SHARED_NAME = "user_info";//sp的文件名
-
-    // 自动登录识别KEY
-    public static final String AUTO_USER = "AUTO_USER";
-    public static final String AUTO_CODE = "AUTO_CODE";
 
     // MyAPP.getContext() 是你的Application里面的一个Context
     private SharedPreferencesUtils() {

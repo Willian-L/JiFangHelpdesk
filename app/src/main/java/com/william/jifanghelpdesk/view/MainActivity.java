@@ -1,4 +1,4 @@
-package com.william.jifanghelpdesk.common.view;
+package com.william.jifanghelpdesk.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.william.jifanghelpdesk.R;
+import com.william.jifanghelpdesk.view.LoginActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;

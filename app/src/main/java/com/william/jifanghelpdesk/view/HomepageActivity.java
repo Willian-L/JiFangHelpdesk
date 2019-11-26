@@ -1,4 +1,4 @@
-package com.william.jifanghelpdesk.common.view;
+package com.william.jifanghelpdesk.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -12,16 +12,21 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".common.view.HomepageActivity"></activity>
-        <activity android:name=".common.view.LoginActivity" />
-        <activity android:name=".common.view.MainActivity">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".view.RegisterActivity"></activity>
+        <activity android:name=".view.HomepageActivity" />
+        <activity android:name=".view.LoginActivity" />
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

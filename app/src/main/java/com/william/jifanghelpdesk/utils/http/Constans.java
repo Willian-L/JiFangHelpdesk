@@ -1,6 +1,6 @@
-package com.william.jifanghelpdesk.Utils;
+package com.william.jifanghelpdesk.utils.http;
 
-class Constans {
+public class Constans {
 
     // 设置默认超时时间
     public static final int DEFAULT_TIME = 10;

@@ -42,17 +42,23 @@ public class User {
     public String getUSER_NAME() {
         return USER_NAME;
     }
-
     public String getPASSWORD() {
         return PASSWORD;
+    }
+    public String getACCESS_TOKEN() {
+        return ACCESS_TOKEN;
+    }
+    public String getAUTO_USER() {
+        return AUTO_USER;
+    }
+    public String getAUTO_CODE() {
+        return AUTO_CODE;
     }
 
     private final String USER_NAME = "USERNAME";
     private final String PASSWORD = "PASSWORD";
-
-    public String getACCESS_TOKEN() {
-        return ACCESS_TOKEN;
-    }
-
     private final String ACCESS_TOKEN = "ACCESS_TOKEN";
+    // 自动登录识别KEY
+    public final String AUTO_USER = "AUTO_USER";
+    public final String AUTO_CODE = "AUTO_CODE";
 }
