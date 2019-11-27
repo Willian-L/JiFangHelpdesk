@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="30dp"
+    android:padding="40dp"
     tools:context=".view.LoginActivity">
 
     <ImageView
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
-        android:background="@drawable/btn_login_true"
+        android:background="@drawable/btn_login_false"
         android:enabled="true"
         android:text="登  陆"
         android:textColor="#eeffffff"

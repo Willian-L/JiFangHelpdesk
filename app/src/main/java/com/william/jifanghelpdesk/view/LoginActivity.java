@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -21,8 +22,8 @@ import com.william.jifanghelpdesk.utils.log.CrashHandlerUtil;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button btnLogin;
-    EditText edtUsername, edtPassword;
+    Button btn_login, btn_forgot, btn_register;
+    EditText edt_username, edt_password;
 
     private User user = new User();
     private LoginController controller = new LoginController();
@@ -53,12 +54,13 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "密码已失效，请重新输入！", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
-                Intent intent = new Intent(this, HomepageActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(this, HomepageActivity.class);
+//                startActivity(intent);
+                Toast.makeText(getApplicationContext(),"自动登录成功",Toast.LENGTH_SHORT).show();
                 break;
         }
 
-        edtUsername.addTextChangedListener(new TextWatcher() {
+        edt_username.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -66,29 +68,29 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (!TextUtils.isEmpty(edtPassword.getText().toString()) && count > 0) {
-//                    btnLogin.setEnabled(true);
-//                    btnLogin.setBackgroundResource(R.drawable.btn_login_true);
-//                } else {
-//                    btnLogin.setEnabled(false);
-//                    btnLogin.setBackgroundResource(R.drawable.btn_login_false);
-//                }
+                if (!TextUtils.isEmpty(edt_password.getText().toString()) && count > 0) {
+                    btn_login.setEnabled(true);
+                    btn_login.setBackgroundResource(R.drawable.btn_login_true);
+                } else {
+                    btn_login.setEnabled(false);
+                    btn_login.setBackgroundResource(R.drawable.btn_login_false);
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                String username = edtUsername.getText().toString().trim();
+                String username = edt_username.getText().toString().trim();
                 if (username != "") {
                     if (controller.AutoFill(username)) {
-                        edtPassword.setText(user.getPassword());
+                        edt_password.setText(user.getPassword());
                     } else {
-                        edtPassword.setText(null);
+                        edt_password.setText(null);
                     }
                 }
             }
         });
 
-        edtPassword.addTextChangedListener(new TextWatcher() {
+        edt_password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -96,13 +98,13 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (!TextUtils.isEmpty(edtUsername.getText().toString()) && count > 0) {
-//                    btnLogin.setEnabled(true);
-//                    btnLogin.setBackgroundResource(R.drawable.btn_login_true);
-//                } else {
-//                    btnLogin.setEnabled(false);
-//                    btnLogin.setBackgroundResource(R.drawable.btn_login_false);
-//                }
+                if (!TextUtils.isEmpty(edt_username.getText().toString()) && count > 0) {
+                    btn_login.setEnabled(true);
+                    btn_login.setBackgroundResource(R.drawable.btn_login_true);
+                } else {
+                    btn_login.setEnabled(false);
+                    btn_login.setBackgroundResource(R.drawable.btn_login_false);
+                }
             }
 
             @Override
@@ -111,11 +113,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = edtUsername.getText().toString().trim();
-                String password = edtPassword.getText().toString().trim();
+                String username = edt_username.getText().toString().trim();
+                String password = edt_password.getText().toString().trim();
                 record = controller.Login(username, password);
                 if (record == -1) {
                     Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
@@ -126,6 +128,13 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "账号或密码输入有误，请重新输入！", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btn_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toRegister();
             }
         });
     }
@@ -141,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        toRegister();
+                        toRegister();
                     }
                 });
         alertDialog.setNegativeButton("否",
@@ -155,13 +164,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void toRegister(){
-
+        Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
+        startActivity(intent);
     }
 
     private void init() {
-        btnLogin = findViewById(R.id.btn_login_ensure);
-        edtUsername = findViewById(R.id.edt_login_username);
-        edtPassword = findViewById(R.id.edt_login_password);
+        btn_login = findViewById(R.id.btn_login_ensure);
+        btn_forgot = findViewById(R.id.btn_login_forgot);
+        btn_register = findViewById(R.id.btn_login_register);
+        edt_username = findViewById(R.id.edt_login_username);
+        edt_password = findViewById(R.id.edt_login_password);
     }
 
 }

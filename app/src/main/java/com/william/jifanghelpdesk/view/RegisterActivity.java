@@ -2,15 +2,232 @@ package com.william.jifanghelpdesk.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.william.jifanghelpdesk.R;
+import com.william.jifanghelpdesk.bean.RegisterInfo;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    private Button btn_ensure, btn_return;
+    private EditText edt_first, edt_last, edt_email, edt_psw, edt_pswEnsure;
+    private TextView txt_first, txt_last, txt_email, txt_psw, txt_pswEnsure_null, txt_pswEnsure_diff, txt_true, txt_false;
+
+    private RegisterInfo info = new RegisterInfo();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        init();
+
+        edt_first.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (TextUtils.isEmpty(edt_first.getText().toString().trim())) {
+                    edt_first.setBackgroundResource(R.drawable.bg_edt_null);
+                    txt_first.setVisibility(View.VISIBLE);
+                } else {
+                    edt_first.setBackgroundResource(R.drawable.bg_edt_normal);
+                    txt_first.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edt_last.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (TextUtils.isEmpty(edt_last.getText().toString().trim())) {
+                    edt_last.setBackgroundResource(R.drawable.bg_edt_null);
+                    txt_last.setVisibility(View.VISIBLE);
+                } else {
+                    edt_last.setBackgroundResource(R.drawable.bg_edt_normal);
+                    txt_last.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edt_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (TextUtils.isEmpty(edt_email.getText().toString().trim())) {
+                    edt_email.setBackgroundResource(R.drawable.bg_edt_null);
+                    txt_email.setVisibility(View.VISIBLE);
+                } else {
+                    edt_email.setBackgroundResource(R.drawable.bg_edt_normal);
+                    txt_email.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edt_psw.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (TextUtils.isEmpty(edt_psw.getText().toString().trim())) {
+                    edt_psw.setBackgroundResource(R.drawable.bg_edt_null);
+                    txt_psw.setVisibility(View.VISIBLE);
+                } else {
+                    edt_psw.setBackgroundResource(R.drawable.bg_edt_normal);
+                    txt_psw.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        edt_pswEnsure.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (TextUtils.isEmpty(edt_pswEnsure.getText().toString().trim())) {
+                    edt_pswEnsure.setBackgroundResource(R.drawable.bg_edt_null);
+                    txt_pswEnsure_null.setVisibility(View.VISIBLE);
+                } else {
+                    edt_pswEnsure.setBackgroundResource(R.drawable.bg_edt_normal);
+                    txt_pswEnsure_null.setVisibility(View.INVISIBLE);
+                    txt_pswEnsure_diff.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        btn_ensure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int record = 0;
+                info.setFirstName(edt_first.getText().toString().trim());
+                info.setLastName(edt_last.getText().toString().trim());
+                info.setEmail(edt_email.getText().toString().trim());
+                info.setPassword(edt_psw.getText().toString().trim());
+                info.setPswEnsure(edt_pswEnsure.getText().toString().trim());
+                if (TextUtils.isEmpty(info.getFirstName())) {
+                    edt_first.setBackgroundResource(R.drawable.bg_edt_null);
+                    txt_first.setVisibility(View.VISIBLE);
+                } else {
+                    record += 1;
+                    edt_first.setBackgroundResource(R.drawable.bg_edt_normal);
+                    txt_first.setVisibility(View.INVISIBLE);
+                }
+                if (TextUtils.isEmpty(info.getLastName())) {
+                    edt_last.setBackgroundResource(R.drawable.bg_edt_null);
+                    txt_last.setVisibility(View.VISIBLE);
+                } else {
+                    record += 1;
+                    edt_last.setBackgroundResource(R.drawable.bg_edt_normal);
+                    txt_last.setVisibility(View.INVISIBLE);
+                }
+                if (TextUtils.isEmpty(info.getEmail())) {
+                    edt_email.setBackgroundResource(R.drawable.bg_edt_null);
+                    txt_email.setVisibility(View.VISIBLE);
+                } else {
+                    record += 1;
+                    edt_email.setBackgroundResource(R.drawable.bg_edt_normal);
+                    txt_email.setVisibility(View.INVISIBLE);
+                }
+                if (TextUtils.isEmpty(info.getPassword())) {
+                    edt_psw.setBackgroundResource(R.drawable.bg_edt_null);
+                    txt_psw.setVisibility(View.VISIBLE);
+                } else {
+                    record += 1;
+                    edt_psw.setBackgroundResource(R.drawable.bg_edt_normal);
+                    txt_psw.setVisibility(View.INVISIBLE);
+                }
+                if (TextUtils.isEmpty(info.getPswEnsure())) {
+                    edt_pswEnsure.setBackgroundResource(R.drawable.bg_edt_null);
+                    txt_pswEnsure_null.setVisibility(View.VISIBLE);
+                    txt_pswEnsure_diff.setVisibility(View.GONE);
+                } else if (!info.getPassword().equals(info.getPswEnsure())) {
+                    edt_pswEnsure.setBackgroundResource(R.drawable.bg_edt_null);
+                    txt_pswEnsure_null.setVisibility(View.GONE);
+                    txt_pswEnsure_diff.setVisibility(View.VISIBLE);
+                } else {
+                    record += 1;
+                    edt_pswEnsure.setBackgroundResource(R.drawable.bg_edt_normal);
+                    txt_pswEnsure_null.setVisibility(View.INVISIBLE);
+                    txt_pswEnsure_diff.setVisibility(View.GONE);
+                }
+                if (record == 5) {
+                    txt_false.setVisibility(View.VISIBLE);
+                    btn_return.setVisibility(View.VISIBLE);
+                    btn_ensure.setVisibility(View.GONE);
+                }
+            }
+        });
+        btn_return.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void init() {
+        btn_ensure = findViewById(R.id.btn_register_ensure);
+        btn_return = findViewById(R.id.btn_register_return);
+        edt_first = findViewById(R.id.edt_register_firstName);
+        edt_last = findViewById(R.id.edt_register_lastName);
+        edt_email = findViewById(R.id.edt_register_email);
+        edt_psw = findViewById(R.id.edt_register_password);
+        edt_pswEnsure = findViewById(R.id.edt_register_pswEnsure);
+        txt_first = findViewById(R.id.txt_register_firstName);
+        txt_last = findViewById(R.id.txt_register_lastName);
+        txt_email = findViewById(R.id.txt_register_email);
+        txt_psw = findViewById(R.id.txt_register_password);
+        txt_pswEnsure_null = findViewById(R.id.txt_register_pswEnsure_null);
+        txt_pswEnsure_diff = findViewById(R.id.txt_register_pswEnsure_diff);
+        txt_true = findViewById(R.id.txt_register_true);
+        txt_false = findViewById(R.id.txt_register_false);
     }
 }

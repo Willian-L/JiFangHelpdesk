@@ -3,19 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.RegisterActivity"
     android:orientation="vertical"
-    android:padding="50dp">
+    android:padding="50dp"
+    tools:context=".view.RegisterActivity">
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/cairo_bold"
         android:text="注册"
         android:textColor="#ea5455"
-        android:textSize="30dp"
-        android:textStyle="bold"/>
+        android:textSize="33dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,67 +26,114 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/editText"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/edt_register_firstName"
+                    style="@style/edt_register_name"
+                    android:hint="姓"
+                    android:text="长"/>
+
+                <TextView
+                    android:id="@+id/txt_register_firstName"
+                    style="@style/txt_register_error"
+                    android:text="请输入姓" />
+
+            </LinearLayout>
 
             <View
                 android:layout_width="15dp"
                 android:layout_height="0dp" />
 
-            <EditText
-                android:id="@+id/editText2"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/edt_register_lastName"
+                    style="@style/edt_register_name"
+                    android:hint="名" />
+
+                <TextView
+                    android:id="@+id/txt_register_lastName"
+                    style="@style/txt_register_error"
+                    android:text="请输入名" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <EditText
-            android:id="@+id/editText3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
-
-        <EditText
-            android:id="@+id/editText4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
-
-        <EditText
-            android:id="@+id/editText5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:id="@+id/edt_register_email"
+            style="@style/edt_register_input"
+            android:layout_marginTop="26dp"
+            android:hint="邮箱"
+            android:inputType="textEmailAddress" />
 
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:id="@+id/txt_register_email"
+            style="@style/txt_register_error"
+            android:text="请输入邮箱" />
+
+        <EditText
+            android:id="@+id/edt_register_password"
+            style="@style/edt_register_input"
+            android:layout_marginTop="26dp"
+            android:hint="密码"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/txt_register_password"
+            style="@style/txt_register_error"
+            android:text="请输入密码" />
+
+        <EditText
+            android:id="@+id/edt_register_pswEnsure"
+            style="@style/edt_register_input"
+            android:layout_marginTop="26dp"
+            android:hint="确认密码"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/txt_register_pswEnsure_diff"
+            style="@style/txt_register_error"
+            android:text="输入密码不一致"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/txt_register_pswEnsure_null"
+            style="@style/txt_register_error"
+            android:text="请输入确认密码" />
+
+        <TextView
+            android:id="@+id/txt_register_true"
+            style="@style/txt_register_alter"
+            android:background="@drawable/bg_txt_alter_true"
+            android:text="注册成功，请到邮箱激活账号" />
+
+        <TextView
+            android:id="@+id/txt_register_false"
+            style="@style/txt_register_alter"
+            android:background="@drawable/bg_txt_alter_false"
+            android:text="注册失败，账号已存在" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+        android:id="@+id/btn_register_ensure"
+        android:text="注  册"
+        style="@style/btn_register" />
 
-
+    <Button
+        android:id="@+id/btn_register_return"
+        android:text="返  回"
+        android:visibility="gone"
+        style="@style/btn_register"/>
 </LinearLayout>
