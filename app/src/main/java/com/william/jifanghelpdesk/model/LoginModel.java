@@ -1,5 +1,7 @@
 package com.william.jifanghelpdesk.model;
 
+import android.os.AsyncTask;
+
 import com.alibaba.fastjson.JSON;
 import com.william.jifanghelpdesk.utils.http.Constans;
 import com.william.jifanghelpdesk.utils.http.OkHttpUtils;
@@ -16,9 +18,7 @@ import okhttp3.Response;
 public class LoginModel {
     FormBody.Builder body = new FormBody.Builder();
 
-    private boolean result = false;
-
-    public boolean loginPost(String username, String password) {
+    public boolean post(String username, String password) {
         body.add("username", username);
         body.add("password", password);
         try {
@@ -46,10 +46,8 @@ public class LoginModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(result);
         return false;
     }
-
 
     public int getAutoCode(String CODE) {
         return SharedPreferencesUtils.getInstance().getInt(CODE, 0);

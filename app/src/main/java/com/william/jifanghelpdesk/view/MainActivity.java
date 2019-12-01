@@ -1,15 +1,16 @@
 package com.william.jifanghelpdesk.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.william.jifanghelpdesk.R;
-import com.william.jifanghelpdesk.view.LoginActivity;
+import com.william.jifanghelpdesk.utils.http.IsNetwordAvailable;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,13 +44,18 @@ public class MainActivity extends AppCompatActivity {
      * Automatic switching after a certain time
      */
     private void automatic(){
-        final Intent intent = new Intent(this, LoginActivity.class);
         Timer timer = new Timer();
         task = new TimerTask() {
             @Override
             public void run() {
-                startActivity(intent);
-                finish();
+                IsNetwordAvailable netword = new IsNetwordAvailable();
+                if (netword.check(getApplicationContext())){
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    Toast.makeText(getApplicationContext(),"当前没有网络连接",Toast.LENGTH_LONG).show();
+                }
             }
         };
         timer.schedule(task, DELAY);

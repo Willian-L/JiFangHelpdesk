@@ -1,10 +1,21 @@
 package com.william.jifanghelpdesk.controller;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
+import com.alibaba.fastjson.JSON;
 import com.william.jifanghelpdesk.bean.User;
 import com.william.jifanghelpdesk.context.MyApplication;
 import com.william.jifanghelpdesk.model.LoginModel;
+import com.william.jifanghelpdesk.utils.http.Constans;
+import com.william.jifanghelpdesk.utils.http.OkHttpUtils;
+import com.william.jifanghelpdesk.utils.sp.SharedPreferencesUtils;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class LoginController {
 
@@ -53,6 +64,25 @@ public class LoginController {
         return record;
     }
 
+    public class postTask extends AsyncTask<String, Integer, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            if (model.post(strings[0], strings[1])) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if (aBoolean == true){
+
+            }
+        }
+    }
+
     /**
      * 联网登录验证
      *
@@ -61,7 +91,7 @@ public class LoginController {
      * @return
      */
     private boolean LoginJudge(String username, String password) {
-        if (model.loginPost(username, password)) {
+        if (model.post(username, password)) {
             return true;
         } else {
             return false;

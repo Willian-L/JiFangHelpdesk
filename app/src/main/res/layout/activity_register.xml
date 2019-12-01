@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
         android:fontFamily="@font/cairo_bold"
         android:text="注册"
         android:textColor="#ea5455"
@@ -20,7 +21,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -38,8 +39,7 @@
                 <EditText
                     android:id="@+id/edt_register_firstName"
                     style="@style/edt_register_name"
-                    android:hint="姓"
-                    android:text="长"/>
+                    android:hint="姓" />
 
                 <TextView
                     android:id="@+id/txt_register_firstName"
@@ -106,7 +106,7 @@
             android:id="@+id/txt_register_pswEnsure_diff"
             style="@style/txt_register_error"
             android:text="输入密码不一致"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txt_register_pswEnsure_null"
@@ -124,16 +124,34 @@
             style="@style/txt_register_alter"
             android:background="@drawable/bg_txt_alter_false"
             android:text="注册失败，账号已存在" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_register_ensure"
+                style="@style/btn_register"
+                android:text="注  册"
+                android:onClick="ensure"/>
+
+            <Button
+                android:id="@+id/btn_register_return"
+                style="@style/btn_register"
+                android:text="返  回"
+                android:visibility="gone"
+                android:onClick="returnLogin"/>
+
+            <Button
+                android:id="@+id/btn_register_clean"
+                style="@style/btn_register"
+                android:text="清  空"
+                android:visibility="gone"
+                android:onClick="clean"/>
+        </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_register_ensure"
-        android:text="注  册"
-        style="@style/btn_register" />
 
-    <Button
-        android:id="@+id/btn_register_return"
-        android:text="返  回"
-        android:visibility="gone"
-        style="@style/btn_register"/>
 </LinearLayout>
