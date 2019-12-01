@@ -1,6 +1,8 @@
 package com.william.jifanghelpdesk.model;
 
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 
 import com.alibaba.fastjson.JSON;
 import com.william.jifanghelpdesk.utils.http.Constans;
@@ -18,35 +20,54 @@ import okhttp3.Response;
 public class LoginModel {
     FormBody.Builder body = new FormBody.Builder();
 
-    public boolean post(String username, String password) {
-        body.add("username", username);
-        body.add("password", password);
-        try {
-            OkHttpUtils okHttpUtils = OkHttpUtils.getOkHttpUtils();
-            Request request = new Request.Builder()
-                    .url(Constans.Base_Url + Constans.Login_Uri)
-                    .addHeader("Content-Type", "application/json")
-                    .addHeader("Accept", "*/*")
-                    .post(body.build())
-                    .build();
-            Response response = okHttpUtils.initOkHttp().newCall(request).execute();
-            String responseData = response.body().string();
-            int code = response.code();
-            if (code == 200) {
-                User person = JSON.parseObject(responseData, User.class);
-                person.setUser_name(username);
-                person.setPassword(password);
-                Map<String, String> map = new HashMap<String, String>();
-                map.put(person.getUSER_NAME(), person.getUser_name());
-                map.put(person.getPASSWORD(), person.getPassword());
-                map.put(person.getACCESS_TOKEN(), person.getAccess_token());
-                SharedPreferencesUtils.getInstance().putMap(person.getUser_name(), map);
-                return true;
+    public static final int LOGIN_TRUE = 1;
+    public static final int LOGIN_FLASE = 2;
+    private Handler mHandler;
+
+    public void setHandler(Handler handler) {
+        mHandler = handler;
+    }
+
+    public synchronized void post(final String username, final String password) {
+        class RunThread implements Runnable {
+            @Override
+            public void run() {
+                body.add("username", username);
+                body.add("password", password);
+                try {
+                    OkHttpUtils okHttpUtils = OkHttpUtils.getOkHttpUtils();
+                    Request request = new Request.Builder()
+                            .url(Constans.Base_Url + Constans.Login_Uri)
+                            .addHeader("Content-Type", "application/json")
+                            .addHeader("Accept", "*/*")
+                            .post(body.build())
+                            .build();
+                    Response response = okHttpUtils.initOkHttp().newCall(request).execute();
+                    String responseData = response.body().string();
+                    Message message = mHandler.obtainMessage();
+                    int code = response.code();
+                    if (code == 200) {
+                        User person = JSON.parseObject(responseData, User.class);
+                        person.setUser_name(username);
+                        person.setPassword(password);
+                        Map<String, String> map = new HashMap<String, String>();
+                        map.put(person.getUSER_NAME(), person.getUser_name());
+                        map.put(person.getPASSWORD(), person.getPassword());
+                        map.put(person.getACCESS_TOKEN(), person.getAccess_token());
+                        SharedPreferencesUtils.getInstance().putMap(person.getUser_name(), map);
+                        message.what = LOGIN_TRUE;
+                    } else {
+                        message.what = LOGIN_FLASE;
+                    }
+                    mHandler.sendMessage(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return false;
+        Thread run = new Thread(new RunThread());
+        run.setPriority(Thread.MAX_PRIORITY);
+        run.start();
     }
 
     public int getAutoCode(String CODE) {

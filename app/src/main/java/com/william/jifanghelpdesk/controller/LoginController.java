@@ -1,31 +1,44 @@
 package com.william.jifanghelpdesk.controller;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
+import androidx.annotation.NonNull;
+
 import com.william.jifanghelpdesk.bean.User;
-import com.william.jifanghelpdesk.context.MyApplication;
 import com.william.jifanghelpdesk.model.LoginModel;
-import com.william.jifanghelpdesk.utils.http.Constans;
-import com.william.jifanghelpdesk.utils.http.OkHttpUtils;
-import com.william.jifanghelpdesk.utils.sp.SharedPreferencesUtils;
 
-import java.util.HashMap;
 import java.util.Map;
-
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class LoginController {
 
-    User user = new User();
-
-    LoginModel model = new LoginModel();
-
-    Context context = MyApplication.getInstance();
+    private User user = new User();
+    private LoginModel model = new LoginModel();
 
     private short record = 0; // 登录失败次数
+
+    private boolean result = false;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case LoginModel.LOGIN_TRUE:
+                    Log.d("login", "Login true");
+                    result = true;
+                    break;
+                case LoginModel.LOGIN_FLASE:
+                    Log.d("login", "Login false");
+                    result = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     /**
      * 自动登录检查
@@ -36,10 +49,14 @@ public class LoginController {
         if (auto_code == 1) {
             user.setUser_name(model.getAutoUser(user.AUTO_USER));
             user.setPassword(model.getUserPSW(user.getUser_name(), user.getPASSWORD()));
-            if (LoginJudge(user.getUser_name(), user.getPassword())) {
+//            LoginJudge(user.getUser_name(), user.getPassword());
+            Log.d("auto", "checkLogin: "+ user.getUser_name()+ user.getPassword());
+            if (LoginJudge(user.getUser_name(), user.getPassword()) == true) {
+                Log.d("auto", "checkLogin: ???");
                 result = 2;
             } else {
                 model.removeAuto(user.getUser_name(), user.AUTO_CODE);
+                Log.d("auto", "checkLogin: !!!");
                 result = 1;
             }
         }
@@ -64,24 +81,27 @@ public class LoginController {
         return record;
     }
 
-    public class postTask extends AsyncTask<String, Integer, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(String... strings) {
-            if (model.post(strings[0], strings[1])) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            if (aBoolean == true){
-
-            }
-        }
-    }
+//    public class postTask extends AsyncTask<String, Integer, Boolean> {
+//
+//        @Override
+//        protected Boolean doInBackground(String... strings) {
+//            if (model.post(strings[0], strings[1])) {
+//                return true;
+//            } else {
+//                return false;
+//            }
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Boolean aBoolean) {
+//            if (aBoolean == true) {
+//                model.setAuto(user.AUTO_USER, user.getUser_name(), user.AUTO_CODE);
+//                record = -1;
+//            } else {
+//                record += 1;
+//            }
+//        }
+//    }
 
     /**
      * 联网登录验证
@@ -91,7 +111,9 @@ public class LoginController {
      * @return
      */
     private boolean LoginJudge(String username, String password) {
-        if (model.post(username, password)) {
+        model.setHandler(handler);
+        model.post(username, password);
+        if (result == true) {
             return true;
         } else {
             return false;
@@ -104,21 +126,22 @@ public class LoginController {
      * @param username
      * @return
      */
-    public boolean AutoFill(String username) {
+    public String AutoFill(String username) {
         user.setUser_name(username);
-        String password = model.getUserPSW(user.getUser_name(),user.getPASSWORD());
+        String password = model.getUserPSW(user.getUser_name(), user.getPASSWORD());
+        Log.i("password", password + "");
 //        Map<String, String> map = model.getUserInfo(user.getUser_name());
         if (password != null) {
 //            user.setPassword(model.getUserPSW(user.getUser_name(),user.getPASSWORD()));
-            if (LoginJudge(user.getUser_name(), user.getPassword())) {
-                return true;
-            } else {
+            if (!LoginJudge(user.getUser_name(), password)) {
                 password = null;
-                return false;
+                return password;
+            }else{
+                return password;
             }
         } else {
             password = null;
-            return false;
+            return password;
         }
     }
 }

@@ -7,6 +7,7 @@ import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,10 +40,10 @@ public class LoginActivity extends AppCompatActivity {
 
         init();
 
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
+//        if (android.os.Build.VERSION.SDK_INT > 9) {
+//            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//            StrictMode.setThreadPolicy(policy);
+//        }
 
         /**
          * 自动登录验证
@@ -56,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             case 2:
 //                Intent intent = new Intent(this, HomepageActivity.class);
 //                startActivity(intent);
-                Toast.makeText(getApplicationContext(),"自动登录成功",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "自动登录成功", Toast.LENGTH_SHORT).show();
                 break;
         }
 
@@ -75,18 +76,16 @@ public class LoginActivity extends AppCompatActivity {
                     btn_login.setEnabled(false);
                     btn_login.setBackgroundResource(R.drawable.btn_login_false);
                 }
+                String username = edt_username.getText().toString().trim();
+                if (username != "") {
+                    String password = controller.AutoFill(username);
+                    Log.i("password_result", password + "");
+                    edt_password.setText(password);
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                String username = edt_username.getText().toString().trim();
-                if (username != "") {
-                    if (controller.AutoFill(username)) {
-                        edt_password.setText(user.getPassword());
-                    } else {
-                        edt_password.setText(null);
-                    }
-                }
             }
         });
 
@@ -116,8 +115,8 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = edt_username.getText().toString().trim();
-                String password = edt_password.getText().toString().trim();
+                final String username = edt_username.getText().toString().trim();
+                final String password = edt_password.getText().toString().trim();
                 record = controller.Login(username, password);
                 if (record == -1) {
                     Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
@@ -163,8 +162,8 @@ public class LoginActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void toRegister(){
-        Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
+    private void toRegister() {
+        Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
         startActivity(intent);
     }
 
