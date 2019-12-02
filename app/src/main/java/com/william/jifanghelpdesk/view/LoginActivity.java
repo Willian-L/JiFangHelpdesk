@@ -3,7 +3,6 @@ package com.william.jifanghelpdesk.view;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -31,8 +30,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private short record = 0;
 
+    private int autoLogin = 0;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) throws IllegalStateException {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -48,7 +49,12 @@ public class LoginActivity extends AppCompatActivity {
         /**
          * 自动登录验证
          */
-        switch (controller.checkLogin()) {
+        try{
+            autoLogin = controller.checkLogin();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        switch (autoLogin) {
             case 0:
                 break;
             case 1:
@@ -59,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
 //                startActivity(intent);
                 Toast.makeText(getApplicationContext(), "自动登录成功", Toast.LENGTH_SHORT).show();
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + autoLogin);
         }
 
         edt_username.addTextChangedListener(new TextWatcher() {
@@ -78,9 +86,16 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 String username = edt_username.getText().toString().trim();
                 if (username != "") {
-                    String password = controller.AutoFill(username);
+                    String password = null;
+                    try {
+                        password = controller.AutoFill(username);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     Log.i("password_result", password + "");
-                    edt_password.setText(password);
+                    if (password != null) {
+                        edt_password.setText(password);
+                    }
                 }
             }
 
@@ -117,7 +132,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String username = edt_username.getText().toString().trim();
                 final String password = edt_password.getText().toString().trim();
-                record = controller.Login(username, password);
+                try {
+                    record = controller.Login(username, password);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 if (record == -1) {
                     Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
 //                    Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);

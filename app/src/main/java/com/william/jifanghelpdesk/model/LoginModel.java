@@ -1,6 +1,5 @@
 package com.william.jifanghelpdesk.model;
 
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 
@@ -28,7 +27,7 @@ public class LoginModel {
         mHandler = handler;
     }
 
-    public synchronized void post(final String username, final String password) {
+    public void post(final String username, final String password) throws InterruptedException {
         class RunThread implements Runnable {
             @Override
             public void run() {
@@ -56,10 +55,11 @@ public class LoginModel {
                         map.put(person.getACCESS_TOKEN(), person.getAccess_token());
                         SharedPreferencesUtils.getInstance().putMap(person.getUser_name(), map);
                         message.what = LOGIN_TRUE;
+                        mHandler.sendMessage(message);
                     } else {
                         message.what = LOGIN_FLASE;
+                        mHandler.sendMessage(message);
                     }
-                    mHandler.sendMessage(message);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -68,7 +68,13 @@ public class LoginModel {
         Thread run = new Thread(new RunThread());
         run.setPriority(Thread.MAX_PRIORITY);
         run.start();
+        try {
+            run.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public int getAutoCode(String CODE) {
         return SharedPreferencesUtils.getInstance().getInt(CODE, 0);

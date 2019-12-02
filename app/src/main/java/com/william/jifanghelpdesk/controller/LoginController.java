@@ -1,6 +1,5 @@
 package com.william.jifanghelpdesk.controller;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -9,8 +8,6 @@ import androidx.annotation.NonNull;
 
 import com.william.jifanghelpdesk.bean.User;
 import com.william.jifanghelpdesk.model.LoginModel;
-
-import java.util.Map;
 
 public class LoginController {
 
@@ -43,7 +40,7 @@ public class LoginController {
     /**
      * 自动登录检查
      */
-    public int checkLogin() {
+    public int checkLogin() throws InterruptedException {
         int result = 0; // 自动登录结果标记（0：不存在该账号   1：存在账号但密码错误   2：账号密码正确）
         int auto_code = model.getAutoCode(user.AUTO_CODE);
         if (auto_code == 1) {
@@ -69,7 +66,7 @@ public class LoginController {
      * @param username
      * @param password
      */
-    public short Login(String username, String password) {
+    public short Login(String username, String password) throws InterruptedException {
         user.setUser_name(username);
         user.setPassword(password);
         if (LoginJudge(user.getUser_name(), user.getPassword()) == true) {
@@ -110,7 +107,7 @@ public class LoginController {
      * @param password
      * @return
      */
-    private boolean LoginJudge(String username, String password) {
+    private boolean LoginJudge(String username, String password) throws InterruptedException {
         model.setHandler(handler);
         model.post(username, password);
         if (result == true) {
@@ -126,7 +123,7 @@ public class LoginController {
      * @param username
      * @return
      */
-    public String AutoFill(String username) {
+    public String AutoFill(String username) throws InterruptedException {
         user.setUser_name(username);
         String password = model.getUserPSW(user.getUser_name(), user.getPASSWORD());
         Log.i("password", password + "");
@@ -139,9 +136,7 @@ public class LoginController {
             }else{
                 return password;
             }
-        } else {
-            password = null;
-            return password;
         }
+        return null;
     }
 }
