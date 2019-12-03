@@ -1,12 +1,9 @@
 package com.william.jifanghelpdesk.model;
 
-import android.os.Handler;
-import android.os.Message;
-
 import com.alibaba.fastjson.JSON;
+import com.william.jifanghelpdesk.bean.User;
 import com.william.jifanghelpdesk.utils.http.Constans;
 import com.william.jifanghelpdesk.utils.http.OkHttpUtils;
-import com.william.jifanghelpdesk.bean.User;
 import com.william.jifanghelpdesk.utils.sp.SharedPreferencesUtils;
 
 import java.util.HashMap;
@@ -19,15 +16,11 @@ import okhttp3.Response;
 public class LoginModel {
     FormBody.Builder body = new FormBody.Builder();
 
+    public int loginState = 0; // 验证结果状态标记
     public static final int LOGIN_TRUE = 1;
     public static final int LOGIN_FLASE = 2;
-    private Handler mHandler;
 
-    public void setHandler(Handler handler) {
-        mHandler = handler;
-    }
-
-    public void post(final String username, final String password) throws InterruptedException {
+    public int post(final String username, final String password){
         class RunThread implements Runnable {
             @Override
             public void run() {
@@ -43,7 +36,6 @@ public class LoginModel {
                             .build();
                     Response response = okHttpUtils.initOkHttp().newCall(request).execute();
                     String responseData = response.body().string();
-                    Message message = mHandler.obtainMessage();
                     int code = response.code();
                     if (code == 200) {
                         User person = JSON.parseObject(responseData, User.class);
@@ -54,11 +46,9 @@ public class LoginModel {
                         map.put(person.getPASSWORD(), person.getPassword());
                         map.put(person.getACCESS_TOKEN(), person.getAccess_token());
                         SharedPreferencesUtils.getInstance().putMap(person.getUser_name(), map);
-                        message.what = LOGIN_TRUE;
-                        mHandler.sendMessage(message);
+                        loginState = LOGIN_TRUE;
                     } else {
-                        message.what = LOGIN_FLASE;
-                        mHandler.sendMessage(message);
+                        loginState = LOGIN_FLASE;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -73,8 +63,8 @@ public class LoginModel {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return loginState;
     }
-
 
     public int getAutoCode(String CODE) {
         return SharedPreferencesUtils.getInstance().getInt(CODE, 0);

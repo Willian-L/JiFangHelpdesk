@@ -59,6 +59,6 @@ public class User {
     private final String PASSWORD = "PASSWORD";
     private final String ACCESS_TOKEN = "ACCESS_TOKEN";
     // 自动登录识别KEY
-    public final String AUTO_USER = "AUTO_USER";
-    public final String AUTO_CODE = "AUTO_CODE";
+    private final String AUTO_USER = "AUTO_USER";
+    private final String AUTO_CODE = "AUTO_CODE";
 }

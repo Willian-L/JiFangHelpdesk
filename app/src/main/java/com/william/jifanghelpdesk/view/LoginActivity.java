@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +15,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.william.jifanghelpdesk.R;
-import com.william.jifanghelpdesk.bean.User;
 import com.william.jifanghelpdesk.controller.LoginController;
 import com.william.jifanghelpdesk.utils.log.CrashHandlerUtil;
 
@@ -25,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
     Button btn_login, btn_forgot, btn_register;
     EditText edt_username, edt_password;
 
-    private User user = new User();
     private LoginController controller = new LoginController();
 
     private short record = 0;
@@ -49,11 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         /**
          * 自动登录验证
          */
-        try{
-            autoLogin = controller.checkLogin();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        autoLogin = controller.checkLogin();
         switch (autoLogin) {
             case 0:
                 break;
@@ -77,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!TextUtils.isEmpty(edt_password.getText().toString()) && count > 0) {
+                if (!TextUtils.isEmpty(edt_password.getText().toString())) {
                     btn_login.setEnabled(true);
                     btn_login.setBackgroundResource(R.drawable.btn_login_true);
                 } else {
@@ -87,12 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                 String username = edt_username.getText().toString().trim();
                 if (username != "") {
                     String password = null;
-                    try {
-                        password = controller.AutoFill(username);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Log.i("password_result", password + "");
+                    password = controller.AutoFill(username);
                     if (password != null) {
                         edt_password.setText(password);
                     }
@@ -112,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!TextUtils.isEmpty(edt_username.getText().toString()) && count > 0) {
+                if (!TextUtils.isEmpty(edt_username.getText().toString())) {
                     btn_login.setEnabled(true);
                     btn_login.setBackgroundResource(R.drawable.btn_login_true);
                 } else {
@@ -132,11 +120,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String username = edt_username.getText().toString().trim();
                 final String password = edt_password.getText().toString().trim();
-                try {
-                    record = controller.Login(username, password);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                record = controller.Login(username, password);
                 if (record == -1) {
                     Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
 //                    Intent intent = new Intent(getApplicationContext(), HomepageActivity.class);
