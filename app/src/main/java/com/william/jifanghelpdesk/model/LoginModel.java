@@ -16,7 +16,7 @@ import okhttp3.Response;
 public class LoginModel {
     FormBody.Builder body = new FormBody.Builder();
 
-    public int loginState = 0; // 验证结果状态标记
+    private int loginState = 0; // 验证结果状态标记
     public static final int LOGIN_TRUE = 1;
     public static final int LOGIN_FLASE = 2;
 
@@ -29,7 +29,7 @@ public class LoginModel {
                 try {
                     OkHttpUtils okHttpUtils = OkHttpUtils.getOkHttpUtils();
                     Request request = new Request.Builder()
-                            .url(Constans.Base_Url + Constans.Login_Uri)
+                            .url(Constans.Base_Url + Constans.Login_Url)
                             .addHeader("Content-Type", "application/json")
                             .addHeader("Accept", "*/*")
                             .post(body.build())

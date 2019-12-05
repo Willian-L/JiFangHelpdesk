@@ -41,7 +41,7 @@
         <!--        <item name="android:backgroundTint">#d21818</item>-->
     </style>
 
-    <style name="edt_register_input">
+    <style name="edt_reg_ret_input">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">10dp</item>
@@ -53,7 +53,7 @@
 <!--                <item name="android:backgroundTint">#d21818</item>-->
     </style>
 
-    <style name="txt_register_error">
+    <style name="txt_reg_ret_error">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#ee1818</item>
@@ -61,7 +61,7 @@
         <item name="android:visibility">invisible</item>
     </style>
 
-    <style name="txt_register_alter">
+    <style name="txt_reg_ret_alter">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">15dp</item>
@@ -70,14 +70,25 @@
         <item name="android:visibility">gone</item>
     </style>
 
-    <style name="btn_register">
+    <style name="btn_reg_ret">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
-        <item name="android:layout_marginTop">50dp</item>
-        <item name="android:background">@drawable/btn_login_true</item>
+<!--        <item name="android:layout_marginTop">50dp</item>-->
+        <item name="android:background">@drawable/btn_true</item>
         <item name="android:enabled">true</item>
         <item name="android:textColor">#eeffffff</item>
         <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="title_reg_ret">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:fontFamily">@font/cairo_bold</item>
+        <item name="android:textColor">#ea5455</item>
+        <item name="android:textSize">33dp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

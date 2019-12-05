@@ -2,6 +2,6 @@
     <string name="app_name">吉方云助</string>
     <string name="ch_edt_login_accout">邮 箱</string>
     <string name="ch_edt_login_account">密 码</string>
-    <string name="ch_btn_login_forgot">忘记密码</string>
+    <string name="ch_btn_login_forgot">找回密码</string>
     <string name="ch_btn_login_register">用户注册</string>
 </resources>

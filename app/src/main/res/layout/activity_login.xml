@@ -11,7 +11,7 @@
 
     <ImageView
         android:id="@+id/img_login_title"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
         app:srcCompat="@drawable/logo_title" />
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
-        android:background="@drawable/btn_login_false"
+        android:background="@drawable/btn_false"
         android:enabled="true"
         android:text="登  陆"
         android:textColor="#eeffffff"

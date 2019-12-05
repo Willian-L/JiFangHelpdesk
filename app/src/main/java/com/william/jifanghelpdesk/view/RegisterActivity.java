@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.william.jifanghelpdesk.R;
 import com.william.jifanghelpdesk.bean.RegisterInfo;
+import com.william.jifanghelpdesk.controller.RegisterController;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -38,12 +39,19 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (TextUtils.isEmpty(edt_first.getText().toString().trim())) {
+                check();
+                if (TextUtils.isEmpty(info.getFirstName())) {
                     edt_first.setBackgroundResource(R.drawable.bg_edt_null);
                     txt_first.setVisibility(View.VISIBLE);
                 } else {
                     edt_first.setBackgroundResource(R.drawable.bg_edt_normal);
                     txt_first.setVisibility(View.INVISIBLE);
+                }
+                if (count > -1) {
+                    btn_clean.setVisibility(View.GONE);
+                    btn_ensure.setVisibility(View.VISIBLE);
+                    txt_true.setVisibility(View.GONE);
+                    txt_false.setVisibility(View.GONE);
                 }
             }
 
@@ -60,12 +68,19 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (TextUtils.isEmpty(edt_last.getText().toString().trim())) {
+                check();
+                if (TextUtils.isEmpty(info.getLastName())) {
                     edt_last.setBackgroundResource(R.drawable.bg_edt_null);
                     txt_last.setVisibility(View.VISIBLE);
                 } else {
                     edt_last.setBackgroundResource(R.drawable.bg_edt_normal);
                     txt_last.setVisibility(View.INVISIBLE);
+                }
+                if (count > -1) {
+                    btn_clean.setVisibility(View.GONE);
+                    btn_ensure.setVisibility(View.VISIBLE);
+                    txt_true.setVisibility(View.GONE);
+                    txt_false.setVisibility(View.GONE);
                 }
             }
 
@@ -82,12 +97,19 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (TextUtils.isEmpty(edt_email.getText().toString().trim())) {
+                check();
+                if (TextUtils.isEmpty(info.getEmail())) {
                     edt_email.setBackgroundResource(R.drawable.bg_edt_null);
                     txt_email.setVisibility(View.VISIBLE);
                 } else {
                     edt_email.setBackgroundResource(R.drawable.bg_edt_normal);
                     txt_email.setVisibility(View.INVISIBLE);
+                }
+                if (count > -1) {
+                    btn_clean.setVisibility(View.GONE);
+                    btn_ensure.setVisibility(View.VISIBLE);
+                    txt_true.setVisibility(View.GONE);
+                    txt_false.setVisibility(View.GONE);
                 }
             }
 
@@ -104,12 +126,19 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (TextUtils.isEmpty(edt_psw.getText().toString().trim())) {
+                check();
+                if (TextUtils.isEmpty(info.getPassword())) {
                     edt_psw.setBackgroundResource(R.drawable.bg_edt_null);
                     txt_psw.setVisibility(View.VISIBLE);
                 } else {
                     edt_psw.setBackgroundResource(R.drawable.bg_edt_normal);
                     txt_psw.setVisibility(View.INVISIBLE);
+                }
+                if (count > -1) {
+                    btn_clean.setVisibility(View.GONE);
+                    btn_ensure.setVisibility(View.VISIBLE);
+                    txt_true.setVisibility(View.GONE);
+                    txt_false.setVisibility(View.GONE);
                 }
             }
 
@@ -126,13 +155,20 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (TextUtils.isEmpty(edt_pswEnsure.getText().toString().trim())) {
+                check();
+                if (TextUtils.isEmpty(info.getPswEnsure())) {
                     edt_pswEnsure.setBackgroundResource(R.drawable.bg_edt_null);
                     txt_pswEnsure_null.setVisibility(View.VISIBLE);
                 } else {
                     edt_pswEnsure.setBackgroundResource(R.drawable.bg_edt_normal);
                     txt_pswEnsure_null.setVisibility(View.INVISIBLE);
                     txt_pswEnsure_diff.setVisibility(View.GONE);
+                }
+                if (count > -1) {
+                    btn_clean.setVisibility(View.GONE);
+                    btn_ensure.setVisibility(View.VISIBLE);
+                    txt_true.setVisibility(View.GONE);
+                    txt_false.setVisibility(View.GONE);
                 }
             }
 
@@ -162,18 +198,30 @@ public class RegisterActivity extends AppCompatActivity {
         txt_false = findViewById(R.id.txt_register_false);
     }
 
-    public void ensure(View view) {
-        int record = 0;
+    private boolean check() {
         info.setFirstName(edt_first.getText().toString().trim());
         info.setLastName(edt_last.getText().toString().trim());
         info.setEmail(edt_email.getText().toString().trim());
         info.setPassword(edt_psw.getText().toString().trim());
         info.setPswEnsure(edt_pswEnsure.getText().toString().trim());
+        if (TextUtils.isEmpty(info.getFirstName())
+                || TextUtils.isEmpty(info.getLastName())
+                || TextUtils.isEmpty(info.getEmail())
+                || TextUtils.isEmpty(info.getPassword())
+                || TextUtils.isEmpty(info.getPswEnsure())) {
+            btn_ensure.setBackgroundResource(R.drawable.btn_false);
+            return false;
+        } else {
+            btn_ensure.setBackgroundResource(R.drawable.btn_true);
+            return true;
+        }
+    }
+
+    public void ensure(View view) {
         if (TextUtils.isEmpty(info.getFirstName())) {
             edt_first.setBackgroundResource(R.drawable.bg_edt_null);
             txt_first.setVisibility(View.VISIBLE);
         } else {
-            record += 1;
             edt_first.setBackgroundResource(R.drawable.bg_edt_normal);
             txt_first.setVisibility(View.INVISIBLE);
         }
@@ -181,7 +229,6 @@ public class RegisterActivity extends AppCompatActivity {
             edt_last.setBackgroundResource(R.drawable.bg_edt_null);
             txt_last.setVisibility(View.VISIBLE);
         } else {
-            record += 1;
             edt_last.setBackgroundResource(R.drawable.bg_edt_normal);
             txt_last.setVisibility(View.INVISIBLE);
         }
@@ -189,7 +236,6 @@ public class RegisterActivity extends AppCompatActivity {
             edt_email.setBackgroundResource(R.drawable.bg_edt_null);
             txt_email.setVisibility(View.VISIBLE);
         } else {
-            record += 1;
             edt_email.setBackgroundResource(R.drawable.bg_edt_normal);
             txt_email.setVisibility(View.INVISIBLE);
         }
@@ -197,10 +243,10 @@ public class RegisterActivity extends AppCompatActivity {
             edt_psw.setBackgroundResource(R.drawable.bg_edt_null);
             txt_psw.setVisibility(View.VISIBLE);
         } else {
-            record += 1;
             edt_psw.setBackgroundResource(R.drawable.bg_edt_normal);
             txt_psw.setVisibility(View.INVISIBLE);
         }
+        boolean check_psw = false;
         if (TextUtils.isEmpty(info.getPswEnsure())) {
             edt_pswEnsure.setBackgroundResource(R.drawable.bg_edt_null);
             txt_pswEnsure_null.setVisibility(View.VISIBLE);
@@ -209,22 +255,31 @@ public class RegisterActivity extends AppCompatActivity {
             edt_pswEnsure.setBackgroundResource(R.drawable.bg_edt_null);
             txt_pswEnsure_null.setVisibility(View.GONE);
             txt_pswEnsure_diff.setVisibility(View.VISIBLE);
+            check_psw = false;
         } else {
-            record += 1;
             edt_pswEnsure.setBackgroundResource(R.drawable.bg_edt_normal);
             txt_pswEnsure_null.setVisibility(View.INVISIBLE);
             txt_pswEnsure_diff.setVisibility(View.GONE);
+            check_psw = true;
         }
-        if (record == 5) {
-            txt_true.setVisibility(View.VISIBLE);
-            btn_return.setVisibility(View.VISIBLE);
-            btn_ensure.setVisibility(View.GONE);
+        if (check() && check_psw) {
+            RegisterController controller = new RegisterController();
+            if (controller.RegisterJudge(info.getEmail(), info.getFirstName(), info.getLastName(), info.getPassword())) {
+                txt_true.setVisibility(View.VISIBLE);
+            } else {
+                txt_false.setVisibility(View.VISIBLE);
+                txt_true.setVisibility(View.GONE);
+                btn_clean.setVisibility(View.VISIBLE);
+                btn_ensure.setVisibility(View.GONE);
+            }
         }
     }
 
     public void returnLogin(View view) {
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.putExtra("username", edt_email.getText().toString().trim());
         startActivity(intent);
+        finish();
     }
 
     public void clean(View view) {

@@ -43,7 +43,7 @@
 
                 <TextView
                     android:id="@+id/txt_register_firstName"
-                    style="@style/txt_register_error"
+                    style="@style/txt_reg_ret_error"
                     android:text="请输入姓" />
 
             </LinearLayout>
@@ -65,7 +65,7 @@
 
                 <TextView
                     android:id="@+id/txt_register_lastName"
-                    style="@style/txt_register_error"
+                    style="@style/txt_reg_ret_error"
                     android:text="请输入名" />
 
             </LinearLayout>
@@ -73,55 +73,55 @@
 
         <EditText
             android:id="@+id/edt_register_email"
-            style="@style/edt_register_input"
+            style="@style/edt_reg_ret_input"
             android:layout_marginTop="26dp"
             android:hint="邮箱"
             android:inputType="textEmailAddress" />
 
         <TextView
             android:id="@+id/txt_register_email"
-            style="@style/txt_register_error"
+            style="@style/txt_reg_ret_error"
             android:text="请输入邮箱" />
 
         <EditText
             android:id="@+id/edt_register_password"
-            style="@style/edt_register_input"
+            style="@style/edt_reg_ret_input"
             android:layout_marginTop="26dp"
             android:hint="密码"
             android:inputType="textPassword" />
 
         <TextView
             android:id="@+id/txt_register_password"
-            style="@style/txt_register_error"
+            style="@style/txt_reg_ret_error"
             android:text="请输入密码" />
 
         <EditText
             android:id="@+id/edt_register_pswEnsure"
-            style="@style/edt_register_input"
+            style="@style/edt_reg_ret_input"
             android:layout_marginTop="26dp"
             android:hint="确认密码"
             android:inputType="textPassword" />
 
         <TextView
             android:id="@+id/txt_register_pswEnsure_diff"
-            style="@style/txt_register_error"
+            style="@style/txt_reg_ret_error"
             android:text="输入密码不一致"
             android:visibility="gone" />
 
         <TextView
             android:id="@+id/txt_register_pswEnsure_null"
-            style="@style/txt_register_error"
+            style="@style/txt_reg_ret_error"
             android:text="请输入确认密码" />
 
         <TextView
             android:id="@+id/txt_register_true"
-            style="@style/txt_register_alter"
+            style="@style/txt_reg_ret_alter"
             android:background="@drawable/bg_txt_alter_true"
             android:text="注册成功，请到邮箱激活账号" />
 
         <TextView
             android:id="@+id/txt_register_false"
-            style="@style/txt_register_alter"
+            style="@style/txt_reg_ret_alter"
             android:background="@drawable/bg_txt_alter_false"
             android:text="注册失败，账号已存在" />
 
@@ -133,23 +133,24 @@
 
             <Button
                 android:id="@+id/btn_register_ensure"
-                style="@style/btn_register"
-                android:text="注  册"
-                android:onClick="ensure"/>
-
-            <Button
-                android:id="@+id/btn_register_return"
-                style="@style/btn_register"
-                android:text="返  回"
-                android:visibility="gone"
-                android:onClick="returnLogin"/>
+                style="@style/btn_reg_ret"
+                android:onClick="ensure"
+                android:background="@drawable/btn_false"
+                android:text="注  册" />
 
             <Button
                 android:id="@+id/btn_register_clean"
-                style="@style/btn_register"
+                style="@style/btn_reg_ret"
+                android:onClick="clean"
                 android:text="清  空"
-                android:visibility="gone"
-                android:onClick="clean"/>
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_register_return"
+                style="@style/btn_reg_ret"
+                android:layout_marginTop="10dp"
+                android:onClick="returnLogin"
+                android:text="返  回" />
         </LinearLayout>
     </LinearLayout>
 

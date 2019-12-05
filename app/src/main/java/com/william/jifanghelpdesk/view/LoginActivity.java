@@ -38,28 +38,25 @@ public class LoginActivity extends AppCompatActivity {
 
         init();
 
-//        if (android.os.Build.VERSION.SDK_INT > 9) {
-//            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//            StrictMode.setThreadPolicy(policy);
-//        }
-
-        /**
-         * 自动登录验证
-         */
-        autoLogin = controller.checkLogin();
-        switch (autoLogin) {
-            case 0:
-                break;
-            case 1:
-                Toast.makeText(getApplicationContext(), "密码已失效，请重新输入！", Toast.LENGTH_SHORT).show();
-                break;
-            case 2:
-//                Intent intent = new Intent(this, HomepageActivity.class);
-//                startActivity(intent);
-                Toast.makeText(getApplicationContext(), "自动登录成功", Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + autoLogin);
+        if (!getUserFromReg(edt_username)) {
+            /**
+             * 自动登录验证
+             */
+            autoLogin = controller.checkLogin();
+            switch (autoLogin) {
+                case 0:
+                    break;
+                case 1:
+                    Toast.makeText(getApplicationContext(), "密码已失效，请重新输入！", Toast.LENGTH_SHORT).show();
+                    break;
+                case 2:
+//                    Intent intent = new Intent(this, HomepageActivity.class);
+//                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "自动登录成功", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + autoLogin);
+            }
         }
 
         edt_username.addTextChangedListener(new TextWatcher() {
@@ -72,10 +69,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(edt_password.getText().toString())) {
                     btn_login.setEnabled(true);
-                    btn_login.setBackgroundResource(R.drawable.btn_login_true);
+                    btn_login.setBackgroundResource(R.drawable.btn_true);
                 } else {
                     btn_login.setEnabled(false);
-                    btn_login.setBackgroundResource(R.drawable.btn_login_false);
+                    btn_login.setBackgroundResource(R.drawable.btn_false);
                 }
                 String username = edt_username.getText().toString().trim();
                 if (username != "") {
@@ -102,10 +99,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(edt_username.getText().toString())) {
                     btn_login.setEnabled(true);
-                    btn_login.setBackgroundResource(R.drawable.btn_login_true);
+                    btn_login.setBackgroundResource(R.drawable.btn_true);
                 } else {
                     btn_login.setEnabled(false);
-                    btn_login.setBackgroundResource(R.drawable.btn_login_false);
+                    btn_login.setBackgroundResource(R.drawable.btn_false);
                 }
             }
 
@@ -139,6 +136,24 @@ public class LoginActivity extends AppCompatActivity {
                 toRegister();
             }
         });
+
+        btn_forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toRetrieve();
+            }
+        });
+    }
+
+    private boolean getUserFromReg(EditText edt_username) {
+        try {
+            Intent intent = getIntent();
+            String username = intent.getStringExtra("username");
+            edt_username.setText(username);
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
     }
 
     /**
@@ -146,23 +161,35 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void showRegisterDialog(int record) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("您已经连续 " + record + " 次输入错误");
-        alertDialog.setMessage("是否需要重置密码?");
-        alertDialog.setPositiveButton("是",
+        alertDialog.setTitle("警告");
+        alertDialog.setMessage("您已经连续 " + record + " 次输入错误，是否需要进行以下操作?");
+        alertDialog.setPositiveButton("注册账号",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         toRegister();
                     }
                 });
-        alertDialog.setNegativeButton("否",
+        alertDialog.setNegativeButton("找回密码",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        toRetrieve();
+                    }
+                });
+        alertDialog.setNeutralButton("取消",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
                     }
                 });
         alertDialog.show();
+    }
+
+    private void toRetrieve() {
+        Intent intent = new Intent(getApplicationContext(), RetrieveActivity.class);
+        startActivity(intent);
     }
 
     private void toRegister() {
